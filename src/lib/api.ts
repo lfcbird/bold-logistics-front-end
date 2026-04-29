@@ -1,12 +1,7 @@
 /**
  * Reusable API client for Bold Logistics.
  *
- * Currently runs in MOCK mode — every request resolves with realistic
- * in-memory data so the UI is fully functional without a backend.
- *
- * To switch to the real Spring Boot backend at http://localhost:8080:
- *   1. Set USE_MOCKS = false below (or wire VITE_API_BASE_URL).
- *   2. The `request<T>` helper already attaches the JWT from localStorage.
+ * Runs in configurable demo mode. By default, VITE_USE_MOCKS=true keeps the UI fully functional with in-memory data. Set VITE_USE_MOCKS=false and VITE_API_BASE_URL=http://localhost:8080 to call the Spring Boot backend.
  */
 import {
   mockCustomers,
@@ -31,8 +26,8 @@ import type {
   Vehicle,
 } from "./types";
 
-const USE_MOCKS = true;
-const API_BASE = "http://localhost:8080";
+const USE_MOCKS = import.meta.env.VITE_USE_MOCKS !== "false";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
 const TOKEN_KEY = "bold.jwt";
 const USER_KEY = "bold.user";
 
